@@ -1,0 +1,43 @@
+	01 - O SISTEMA INICIA NO SERVER.TS AQUE IMPORTA:
+
+		a - express - para usar o padrão REST;
+		b - path - para acesso a diretórios;
+		c - dotenv - para iniciar as váriáveis de ambiente;
+		d - importa o uma instancia de banco de dados mongoDB;
+		e - cors - para liberar urls com acesso permitido e métodos que podem ser usado,
+			de forma a evitar os erros de CORS;
+		f - router names - importa todas as rotas que forem criadas no diretório ROUTES para 
+			que as mesmas possam ser utilizadas.
+
+	02 - INICIA MONGO CONNECT;
+	03 - INICIA O USE DE DOTENV (VARIÁVEIS DE AMBIENTE);
+	04 - INICIA O SERVER;
+	05 - USA CORS;
+
+	06 - CRIA UM STATIC PATH (CAMINHO ESTÁTICO) PARA O DIRETÓRIO PUPLIC;
+	07 - USA URLENCODED EXTENDED : TRUE VAI UTILIZAR A BIBLIOTECA QS E QUANDO FOR 
+	FALSE ELE VAI UTILIZAR A BIBLIOTECA QUERYSTRING.  A DIFERENÇA ENTRE ELAS É QUE A 
+	BIBLIOTECA QS PERMITE O ANINHAMENTO DE OBJETOS (NESTED OBJECTS), QUE É PRATICAMENTE 
+	COMO O JSON TRABALHA: {"animal":{"tipo":"cachorro","raca":"vira-lata","idade":3}}
+	08 - USA AS ROTAS DO DIRETÓRIO ROUTES;
+	09 - USA A ROTA 404;
+	10 - SERVE.LISTEM, FAZ O SERVIDOR ESCUTAR AS REQUISIÇÕES VINDAS DA PORTA DEFINIDA 
+	PARA O EXPRESS É ATENDER REQUISIÇÕES HTTP.
+	
+	11 - API.TS É INICIADA NO SERVER E IMPORTA:
+	
+		a - express - para usar o padrão REST;
+		b - todos os contollers.
+		
+	12 - CRIA A CONSTANTE ROUTER;
+	13 - ENVIA AS REQUESIÇÕES PARA OS CONTROLLERS;
+	14 - LIBERA A EXPORTAÇÃO;
+	
+	15 - APICONTROLLES.TS RESEBE AS REQUISIÇÕES DE API.TS, IMPORTA:
+	
+		a - express - para usar o padrão REST;
+		b - 
+	
+
+
+
