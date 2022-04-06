@@ -1,12 +1,15 @@
 // API ROUTS
 import { Router } from 'express';
-import * as ApiController from '../controllers/playersController';
+
+/* START: IMPORT CONTROLLES */
+import * as PlayersController from '../controllers/playersController';
+/* EMD: IMPORT CONTROLLES */
 
 const router = Router();
 
 /* START: ROUTS */
-router.get('/ping', ApiController.ping);
-router.get('/name/:name', ApiController.name);
+router.get('/players', PlayersController.players);
+router.get('/name/:name', PlayersController.name);
 /* END: ROUTS */
 
 export default router;
