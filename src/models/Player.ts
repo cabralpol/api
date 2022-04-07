@@ -16,6 +16,7 @@ const schema = new Schema<PlayerType>({
     score: { type: Number }
 });
 
+// Exporting model
 const modelName: string = 'Player';
 const PlayerModel = (connection && connection.models[modelName]) ? 
 (connection.models[modelName] as Model<PlayerType>) : 

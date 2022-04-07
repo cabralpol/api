@@ -37,6 +37,15 @@
 	
 		a - express - para usar o padrão REST;
 		b - 
+
+
+	CRUD PARA PLAYERS
+
+	POST /api/player - Cria novo player
+	GET /api/player - Lista todos os players
+	GET /api/player/id - Pega informações de um player
+	PUT /api/player/id - Atualiza um player
+	DELETE /api/player/id - Deleta um player
 	
 
 
