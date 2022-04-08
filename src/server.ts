@@ -1,21 +1,21 @@
 import express, { Request, Response } from "express";
 import path from "path";
 import dotenv from 'dotenv';
-import { mongoConnect } from "./instances/mongo";
-import cors from 'cors';
+// import { mongoConnect } from "./instances/mysql";
+// import cors from 'cors';
 import api from './routes/api';
 
 dotenv.config();
 
-mongoConnect();
+// mongoConnect();
 
 const server = express();
 
 /* START: RELEASE OF URLS AND METHODS */
-server.use(cors({
-    // origin: 'http://meusite.com',
-    // methods: ['GET', 'POST']
-}));
+// server.use(cors({
+//     // origin: 'http://meusite.com',
+//     // methods: ['GET', 'POST']
+// }));
 /* END: RELEASE OF URLS AND METHODS */
 
 server.use(express.static(path.join(__dirname, '../public')));
