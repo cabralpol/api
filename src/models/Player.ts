@@ -24,21 +24,33 @@ export const PlayerModel = sequelize.define<PlayerTypes>(modelName, {
     name: {
         type: DataTypes.STRING,
         get() {
-            return this.getDataValue('name').toUpperCase();
+            const name = this.getDataValue('name');
+            return name.toUpperCase();
+        },
+        set(value: string) {
+            value = value.charAt(0).toUpperCase() + value.slice(1);
+            this.setDataValue('name', value);
         }
     },
     last_name: {
         type: DataTypes.STRING,
         get() {
-            return this.getDataValue('last_name').toUpperCase();
+            const name = this.getDataValue('last_name').toUpperCase();
+            return name;
+        },
+        set(value: string) {
+            value = value.toLowerCase().replace(/(?:^|\s)\S/g, function(a) {
+                return a.toUpperCase();
+            });
+            this.setDataValue('last_name', value);
         }
     },     
     full_name: {
         type: DataTypes.VIRTUAL,
         get() {
-            let name: string = this.getDataValue('name').toUpperCase();
-            let full_name: string = this.getDataValue('last_name').toUpperCase();
-            return `${name} ${full_name}`;
+            const name: string = this.getDataValue('name').toUpperCase();
+            const last_name: string = this.getDataValue('last_name').toUpperCase();
+            return `${name} ${last_name}`;
         }
     },
     email: { 
@@ -55,7 +67,14 @@ export const PlayerModel = sequelize.define<PlayerTypes>(modelName, {
         }
     },
     score: { 
-        type: DataTypes.INTEGER 
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        set(value: number) {
+            if (value <= 0) {
+                value = 0;
+            }
+            this.setDataValue('score', value);
+        }
     }
 }, {
     tableName: 'players',

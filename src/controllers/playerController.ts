@@ -15,15 +15,14 @@ export const selectPlayers = async (req: Request, res: Response) => {
         res.status(200).send(players);
     } else {
         console.log("PLAYERS: ", JSON.stringify(players));
-        res.status(503).send({ error: "No records found!" });
+        res.status(200).send({ error: "No records found!" });
     }
 }
 
-export const insertPlayer = async (req: Request, res: Response) => { 
-      
-    let player; 
-    console.log(req);
-    if (req.body) {
+export const insertPlayer = async (req: Request, res: Response) => {
+
+    let player = {};
+    if (req.body.name && req.body.last_name && req.body.email && req.body.age) {
 
         let name = req.body.name;
         let last_name = req.body.last_name;
@@ -43,43 +42,59 @@ export const insertPlayer = async (req: Request, res: Response) => {
         res.status(201).send(player);
     } else {
         console.log("PLAYER: ", JSON.stringify(player));
-        res.status(503).send({ error: "No records inserted!" });
+        res.status(200).send({ error: "No records inserted!" });
     }
 }
 
-// export const selectPlayer = async (req: Request, res: Response) => {
-//     res;
-//     req;
-//     let id = req.params.id;
-//     let player = await PlayerModel.findById({_id:id});
+export const selectPlayer = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    let player = await PlayerModel.findByPk(id);
 
-//     // if(player) {
-//     //     res.status(200).send({ player });
-//     //     console.log("PLAYER SELECIONADO", player);
-//     // } else {
-//     //     res.status(200).send({error: 'Player não encontrado!' });
-//     //     console.log("PLAYER NÃO ENCONTRADO!");
-//     // }
-//     console.log(player);
-//     res.status(200).send(player);
+    if (player) {
+        res.status(200).send(player);
+        console.log("PLAYER SELECIONADO", JSON.stringify(player));
+    } else {
+        res.status(200).send({ error: 'No records found!' });
+        console.log("PLAYER NÃO ENCONTRADO!");
+    }
+}
 
-//     // res.json({ player: player });
-// }
+export const updatePlayer = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    let player = await PlayerModel.findByPk(id);
 
-// export const updatePlayer = async (req: Request, res: Response) => {
-//     let name = req.params.name;
-//     let player = await PlayerModel.findOne({ name });
-//     console.log("PLAYER ATUALIZAR", player);
+    if(player) {
 
-//     req.params;
-//     res.json({ player: player });
-// }
-// export const deletePlayer = async (req: Request, res: Response) => {
-//     let name = req.params.name;
-//     let player = await PlayerModel.findOne({ name });
-//     console.log("PLAYER DELETAR", player);
+        if(req.body.name) {
+            player.name = req.body.name;
+        }
+        if(req.body.name) {
+            player.name = req.body.name;
+        }
+        if(req.body.last_name) {
+            player.last_name = req.body.last_name;
+        }
+        if(req.body.age) {
+            player.age = req.body.age;
+        }
+        if(req.body.score) {
+            player.score = req.body.score;
+        }       
 
-//     req.params;
-//     res.json({ player: player });
-// }
+        await player.save();        
+
+        res.status(201).send(player);
+        console.log("PLAYER SELECIONADO", JSON.stringify(player));
+    } else {
+        res.status(200).send({ error: 'No records found!' });
+        console.log("PLAYER NÃO ENCONTRADO!");
+    }
+}
+
+export const deletePlayer = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    await PlayerModel.destroy({where: {id}});
+    res.status(200).send('Data deleted!');
+    console.log("PLAYER DELETADO!");
+}
 /* END: ACTIONS */
