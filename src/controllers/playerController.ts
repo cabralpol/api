@@ -11,38 +11,11 @@ export const selectPlayers = async (req: Request, res: Response) => {
     const players = await PlayerModel.findAll();
     req;
     if (players.length > 0) {
-        console.log("PLAYERS: ", JSON.stringify(players));
+        console.log("selected players: ", JSON.stringify(players));
         res.status(200).send(players);
     } else {
-        console.log("PLAYERS: ", JSON.stringify(players));
-        res.status(200).send({ error: "No records found!" });
-    }
-}
-
-export const insertPlayer = async (req: Request, res: Response) => {
-
-    let player = {};
-    if (req.body.name && req.body.last_name && req.body.email && req.body.age) {
-
-        let name = req.body.name;
-        let last_name = req.body.last_name;
-        let email = req.body.email;
-        let age = req.body.age;
-        let score = req.body.score;
-
-        player = await PlayerModel.create({
-            name: name,
-            last_name: last_name,
-            email: email,
-            age: age,
-            score: score
-        });
-
-        console.log("PLAYER: ", JSON.stringify(player));
-        res.status(201).send(player);
-    } else {
-        console.log("PLAYER: ", JSON.stringify(player));
-        res.status(200).send({ error: "No records inserted!" });
+        console.log("Players not found: ", JSON.stringify(players));
+        res.status(200).send({ error: "Players not found" });
     }
 }
 
@@ -52,10 +25,28 @@ export const selectPlayer = async (req: Request, res: Response) => {
 
     if (player) {
         res.status(200).send(player);
-        console.log("PLAYER SELECIONADO", JSON.stringify(player));
+        console.log("Selected player: ", JSON.stringify(player) + "\n");
     } else {
-        res.status(200).send({ error: 'No records found!' });
-        console.log("PLAYER NÃO ENCONTRADO!");
+        res.status(200).send({ error: 'Player not found' });
+        console.log("Player not found: " + "\n");
+    }
+}
+
+export const insertPlayer = async (req: Request, res: Response) => {
+
+    let player;
+    const json = req.body.myField;
+    const obj = JSON.parse(json);
+    
+    if (obj.name && obj.last_name && obj.email && obj.age) {        
+
+        player = await PlayerModel.create(obj);
+        
+        res.status(201).send(player);
+        console.log("Inserted player: ", JSON.stringify(player) + "\n");
+    } else {        
+        res.status(200).send({ error: "No records inserted" });
+        console.log("No records inserted: ", JSON.stringify(player) + "\n");
     }
 }
 
@@ -76,6 +67,9 @@ export const updatePlayer = async (req: Request, res: Response) => {
         }
         if(req.body.age) {
             player.age = req.body.age;
+        }
+        if(req.body.level) {
+            player.level = req.body.level;
         }
         if(req.body.score) {
             player.score = req.body.score;

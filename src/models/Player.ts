@@ -10,6 +10,7 @@ export interface PlayerTypes extends Model {
     last_name: string,
     email: string,    
     score: number,
+    level: number,
     age: number
 }
 
@@ -24,7 +25,7 @@ export const PlayerModel = sequelize.define<PlayerTypes>(modelName, {
     name: {
         type: DataTypes.STRING,
         get() {
-            const name = this.getDataValue('name');
+            const name: string = this.getDataValue('name');
             return name.toUpperCase();
         },
         set(value: string) {
@@ -64,6 +65,16 @@ export const PlayerModel = sequelize.define<PlayerTypes>(modelName, {
                 value = 18;
             }
             this.setDataValue('age', value);
+        }
+    },
+    level: { 
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        set(value: number) {
+            if (value <= 0) {
+                value = 0;
+            }
+            this.setDataValue('level', value);
         }
     },
     score: { 
