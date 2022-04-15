@@ -54,41 +54,50 @@ export const updatePlayer = async (req: Request, res: Response) => {
     const id = req.params.id;
     let player = await PlayerModel.findByPk(id);
 
+    const json = req.body.myField;
+    const obj = JSON.parse(json);
+    
+
     if(player) {
 
-        if(req.body.name) {
-            player.name = req.body.name;
+        if(obj.name) {
+            player.name = obj.name;
         }
-        if(req.body.name) {
-            player.name = req.body.name;
+        if(obj.last_name) {
+            player.last_name = obj.last_name;
         }
-        if(req.body.last_name) {
-            player.last_name = req.body.last_name;
+        if(obj.email) {
+            player.last_name = obj.last_name;
         }
-        if(req.body.age) {
-            player.age = req.body.age;
+        if(obj.age) {
+            player.age = obj.age;
         }
-        if(req.body.level) {
-            player.level = req.body.level;
+        if(obj.level) {
+            player.level = obj.level;
         }
-        if(req.body.score) {
-            player.score = req.body.score;
+        if(obj.score) {
+            player.score = obj.score;
         }       
 
         await player.save();        
 
         res.status(201).send(player);
-        console.log("PLAYER SELECIONADO", JSON.stringify(player));
+        console.log("Modified player: ", JSON.stringify(player) + "\n");
     } else {
-        res.status(200).send({ error: 'No records found!' });
-        console.log("PLAYER NÃO ENCONTRADO!");
+        res.status(200).send({ error: 'unmodified player' });
+        console.log("Unmodified player", JSON.stringify(player) + "\n");
     }
 }
 
 export const deletePlayer = async (req: Request, res: Response) => {
     const id = req.params.id;
-    await PlayerModel.destroy({where: {id}});
-    res.status(200).send('Data deleted!');
-    console.log("PLAYER DELETADO!");
+    let player = await PlayerModel.destroy({where: {id}});
+    if(player) {
+        res.status(200).send('Player deleted');
+        console.log("Player deleted");
+    } else {
+        res.status(204).send('Player not found');
+        console.log("Player not found");
+    }
 }
 /* END: ACTIONS */
