@@ -21,7 +21,7 @@ export const selectPlayers = async (req: Request, res: Response) => {
 
 export const selectPlayer = async (req: Request, res: Response) => {
     const id = req.params.id;
-    let player = await PlayerModel.findByPk(id);
+    let player = await PlayerModel.findAll({where: {id}});
 
     if (player) {
         res.status(200).send(player);
